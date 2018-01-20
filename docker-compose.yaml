@@ -15,7 +15,7 @@ services:
       - "backend"
     volumes:
       - "/deep-shirt/confs/traefik.toml:/traefik.toml:ro"
-      - "/deep-shirt/tls:/tls:ro"
+      - "/deep-shirt/letsencrypt/certs:/certs:ro"
       - "/etc/localtime:/etc/localtime:ro"
     network_mode: "bridge"
 
@@ -31,6 +31,8 @@ services:
     restart: "unless-stopped"
     container_name: "backend"
     hostname: "backend"
+    volumes:
+      - "/deep-shirt/confs/firebase-service-account.json:/firebase-service-account.json:ro"
     env_file:
       - "/deep-shirt/envs/backend.env"
     network_mode: "bridge"

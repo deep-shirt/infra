@@ -16,11 +16,11 @@ defaultEntryPoints = ["http", "https"]
     MinVersion = "VersionTLS12"
     CipherSuites = ["TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384", "TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256"]
       [[entryPoints.https.tls.certificates]]
-      CertFile = "/tls/live/deep-shirt.com/fullchain.pem"
-      KeyFile = "/tls/live/deep-shirt.com/privkey.pem"
+      CertFile = "/certs/live/deep-shirt.com/fullchain.pem"
+      KeyFile = "/certs/live/deep-shirt.com/privkey.pem"
       [[entryPoints.https.tls.certificates]]
-      CertFile = "/tls/live/api.deep-shirt.com/fullchain.pem"
-      KeyFile = "/tls/live/api.deep-shirt.com/privkey.pem"
+      CertFile = "/certs/live/api.deep-shirt.com/fullchain.pem"
+      KeyFile = "/certs/live/api.deep-shirt.com/privkey.pem"
 
 
 [file]
