@@ -1,0 +1,53 @@
+checkNewVersion = false
+logLevel = "INFO"
+defaultEntryPoints = ["http", "https"]
+
+
+[entryPoints]
+
+  [entryPoints.http]
+  address = ":80"
+    [entryPoints.http.redirect]
+    entryPoint = "https"
+
+  [entryPoints.https]
+  address = ":443"
+    [entryPoints.https.tls]
+    MinVersion = "VersionTLS12"
+    CipherSuites = ["TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384", "TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256"]
+      [[entryPoints.https.tls.certificates]]
+      CertFile = "/tls/live/deep-shirt.com/fullchain.pem"
+      KeyFile = "/tls/live/deep-shirt.com/privkey.pem"
+      [[entryPoints.https.tls.certificates]]
+      CertFile = "/tls/live/api.deep-shirt.com/fullchain.pem"
+      KeyFile = "/tls/live/api.deep-shirt.com/privkey.pem"
+
+
+[file]
+watch = false
+
+
+[frontends]
+
+  [frontends.deepfrontend]
+  backend = "deepfrontend"
+  passHostHeader = true
+    [frontends.deepfrontend.routes.main]
+    rule = "Host:deep-shirt.com"
+
+  [frontends.deepbackend]
+  backend = "deepbackend"
+  passHostHeader = true
+    [frontends.deepbackend.routes.main]
+    rule = "Host:api.deep-shirt.com"
+
+
+[backends]
+
+  [backends.deepfrontend]
+    [backends.deepfrontend.servers.server1]
+    url = "http://frontend:80"
+
+  [backends.deepbackend]
+    [backends.deepbackend.servers.server1]
+    url = "http://backend:80"

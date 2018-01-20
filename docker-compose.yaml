@@ -1,0 +1,36 @@
+version: '3'
+
+services:
+
+  traefik:
+    image: "traefik:latest"
+    restart: "unless-stopped"
+    container_name: "traefik"
+    command: ["--configfile=/traefik.toml"]
+    ports:
+      - "80:80"
+      - "443:443"
+    links:
+      - "frontend"
+      - "backend"
+    volumes:
+      - "/deep-shirt/confs/traefik.toml:/traefik.toml:ro"
+      - "/deep-shirt/tls:/tls:ro"
+      - "/etc/localtime:/etc/localtime:ro"
+    network_mode: "bridge"
+
+  frontend:
+    image: "deepshirt/frontend:latest"
+    restart: "unless-stopped"
+    container_name: "frontend"
+    hostname: "frontend"
+    network_mode: "bridge"
+
+  backend:
+    image: "deepshirt/backend:latest"
+    restart: "unless-stopped"
+    container_name: "backend"
+    hostname: "backend"
+    env_file:
+      - "/deep-shirt/envs/backend.env"
+    network_mode: "bridge"
