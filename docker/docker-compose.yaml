@@ -32,7 +32,7 @@ services:
     container_name: "backend"
     hostname: "backend"
     volumes:
-      - "/deep-shirt/confs/firebase-service-account.json:/firebase-service-account.json:ro"
+      - "/deep-shirt/keys/firebase-service-account.json:/firebase-service-account.json:ro"
     env_file:
       - "/deep-shirt/envs/backend.env"
     network_mode: "bridge"
