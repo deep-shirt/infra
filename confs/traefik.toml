@@ -18,9 +18,6 @@ defaultEntryPoints = ["http", "https"]
       [[entryPoints.https.tls.certificates]]
       CertFile = "/certs/live/deep-shirt.com/fullchain.pem"
       KeyFile = "/certs/live/deep-shirt.com/privkey.pem"
-      [[entryPoints.https.tls.certificates]]
-      CertFile = "/certs/live/api.deep-shirt.com/fullchain.pem"
-      KeyFile = "/certs/live/api.deep-shirt.com/privkey.pem"
 
 
 [file]
@@ -35,19 +32,9 @@ watch = false
     [frontends.deepfrontend.routes.main]
     rule = "Host:deep-shirt.com"
 
-  [frontends.deepbackend]
-  backend = "deepbackend"
-  passHostHeader = true
-    [frontends.deepbackend.routes.main]
-    rule = "Host:api.deep-shirt.com"
-
 
 [backends]
 
   [backends.deepfrontend]
     [backends.deepfrontend.servers.server1]
     url = "http://frontend:80"
-
-  [backends.deepbackend]
-    [backends.deepbackend.servers.server1]
-    url = "http://backend:80"

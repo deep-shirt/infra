@@ -12,7 +12,6 @@ services:
       - "443:443"
     links:
       - "frontend"
-      - "backend"
     volumes:
       - "/deep-shirt/confs/traefik.toml:/traefik.toml:ro"
       - "/deep-shirt/letsencrypt/certs:/certs:ro"
@@ -29,15 +28,4 @@ services:
       - "/deep-shirt/confs/server.conf:/etc/nginx/conf.d/default.conf:ro"
       - "/deep-shirt/www:/usr/share/nginx/html:ro"
       - "/etc/localtime:/etc/localtime:ro"
-    network_mode: "bridge"
-
-  backend:
-    image: "deepshirt/backend:latest"
-    restart: "unless-stopped"
-    container_name: "backend"
-    hostname: "backend"
-    volumes:
-      - "/deep-shirt/keys/firebase-service-account.json:/firebase-service-account.json:ro"
-    env_file:
-      - "/deep-shirt/envs/backend.env"
     network_mode: "bridge"
