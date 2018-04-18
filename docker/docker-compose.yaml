@@ -2,30 +2,19 @@ version: '3'
 
 services:
 
-  traefik:
-    image: "traefik:latest"
-    restart: "unless-stopped"
-    container_name: "traefik"
-    command: ["--configfile=/traefik.toml"]
-    ports:
-      - "80:80"
-      - "443:443"
-    links:
-      - "frontend"
-    volumes:
-      - "/deep-shirt/confs/traefik.toml:/traefik.toml:ro"
-      - "/deep-shirt/letsencrypt/certs:/certs:ro"
-      - "/etc/localtime:/etc/localtime:ro"
-    network_mode: "bridge"
-
   frontend:
     image: "nginx:alpine"
     restart: "unless-stopped"
     container_name: "frontend"
     hostname: "frontend"
+    ports:
+      - "80:80"
+      - "443:443"
     volumes:
       - "/deep-shirt/confs/nginx.conf:/etc/nginx/nginx.conf:ro"
       - "/deep-shirt/confs/server.conf:/etc/nginx/conf.d/default.conf:ro"
+      - "/deep-shirt/letsencrypt/certs:/certs:ro"
+      - "/deep-shirt/keys/dhparam.pem:/etc/nginx/dhparam.pem:ro"
       - "/deep-shirt/www:/usr/share/nginx/html:ro"
       - "/etc/localtime:/etc/localtime:ro"
     network_mode: "bridge"
